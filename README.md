@@ -199,6 +199,14 @@ Change the database name, user and password to what you previously have specifie
 ./installer/update_db.pl
 ```
 
+NOTE: If this fails with an error including "Perhaps the DBD::mysql perl module hasn't been fully installed,"
+then install the Perl Mysql package using:
+
+```bash
+sudo apt-get install libdbd-mysql-perl
+```
+
+
 This fills the Libki database with the necessary tables and other information.
 
 * Create a superadmin user to log in to Libki as
@@ -316,8 +324,8 @@ If the libki user cannot write to it, the cron scripts will fail to run correctl
 
 ```bash
 touch ~/libki_server.log
-chown libki:root ~/libki_server.log
-chmod 664 ~/libki_server.log
+sudo chown libki:root ~/libki_server.log
+sudo chmod 664 ~/libki_server.log
 ```
 
 This creates an empty log file, sets the owner and group, then sets the correct permissions on the file.
@@ -354,6 +362,9 @@ You should see a line similar to the following:
 ```bash
 root     28326  0.0  0.3  10932  7132 ?        S    09:56   0:00 /usr/bin/perl /home/libki/perl5/bin/start_server --daemonize --port 3000 --pid-file /home/libki/libki.pid --status-file /home/libki/libki.status --log-file /home/libki/libki_server.log -- /home/libki/perl5/bin/plackup -I /home/libki/Libki/lib -I /home/libki/perl5/lib/perl5/ -s Starman --workers 2 --max-requests 50000 -E production -a /home/libki/Libki/libki.psgi
 ```
+You should now be able to go to the IP (or hostname if your network's DNS is configured correctly) of your server.
+For a browser on the server machine you could use: http://172.0.0.1
+To access the administrator area it would be: http://127.0.0.1/administration
 
 ### Troubleshooting
 
